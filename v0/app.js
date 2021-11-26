@@ -7,7 +7,9 @@ let todos = [
 
 const addTodo = (todos, newTodo) => [newTodo, ...todos];
 const createId = todos => Math.max(...todos.map(todo => todo.id), 0) + 1;
-const removeTodo = id => todos.filter(todo => todo.id !== +id);
+const removeTodo = id => {
+  todos = todos.filter(todo => todo.id !== +id);
+};
 const toggleTodo = id => {
   todos = todos.map(todo => {
     return todo.id === +id ? { ...todo, completed: !todo.completed } : todo;
@@ -58,8 +60,12 @@ window.addEventListener("DOMContentLoaded", () => {
   todoList.addEventListener("click", e => {
     const { id } = e.target.parentNode;
 
-    if (!e.target.matches(".completed-todo")) return;
-    toggleTodo(id);
+    if (!e.target.matches(".completed-todo")) {
+      console.log(id);
+      removeTodo(id);
+    } else {
+      toggleTodo(id);
+    }
     render();
   });
 });
